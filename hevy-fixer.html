@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Hevy Bulk Exercise Replacer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<h1>Hevy Bulk Exercise Replacer</h1>
+<p class="subtitle">
+  Replace all instances of one exercise template with another across your entire workout history.
+  Requires <strong>Hevy Pro</strong> API key from
+  <a href="https://hevy.com/settings?developer" target="_blank">hevy.com/settings?developer</a>
+</p>
+
+<!-- API Key -->
+<div class="card" id="card1">
+  <h2>Step 1 - API Key</h2>
+  <div class="inline">
+    <div>
+      <label>API Key</label>
+      <input type="password" id="apiKeyInput" placeholder="Paste your Hevy API key here..." />
+    </div>
+    <div>
+      <label>&nbsp;</label>
+      <button id="connectBtn" onclick="app.connect()">Connect &amp; Load Templates</button>
+    </div>
+  </div>
+</div>
+
+<!-- Select wrong template -->
+<div class="card" id="card2" style="display:none">
+  <h2>Step 2 - Select the Exercise to Replace</h2>
+  <p class="field-note">Click the exercise you logged incorrectly.</p>
+  <div class="search-box">
+    <label>Search exercise templates</label>
+    <input type="text" id="wrongSearch" placeholder="e.g. iso-lateral, unilateral, chest press..." oninput="app.onWrongSearch(this.value)" />
+  </div>
+  <div id="wrongTemplateList"></div>
+  <div id="wrongPagination" class="pagination"></div>
+</div>
+
+<!-- Arrow -->
+<div id="arrow2" class="arrow" style="display:none">replace with</div>
+
+<!-- Select right template -->
+<div class="card" id="card3" style="display:none">
+  <h2>Step 3 - Select the Replacement Exercise</h2>
+  <p class="field-note">Click the correct exercise to use instead.</p>
+  <div class="search-box">
+    <label>Search exercise templates</label>
+    <input type="text" id="rightSearch" placeholder="e.g. dumbbell row, barbell row..." oninput="app.onRightSearch(this.value)" />
+  </div>
+  <div id="rightTemplateList"></div>
+  <div id="rightPagination" class="pagination"></div>
+</div>
+
+<!-- Confirm & preview -->
+<div class="card" id="card4" style="display:none">
+  <h2>Step 4 - Confirm &amp; Replace</h2>
+  <div id="confirmNote"></div>
+
+  <div class="stats">
+    <div class="stat-box">
+      <div class="stat-label">Workouts Scanned</div>
+      <div class="stat-value" id="statTotal">-</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Affected Workouts</div>
+      <div class="stat-value" id="statAffected">-</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Exercises to Update</div>
+      <div class="stat-value" id="statExercises">-</div>
+    </div>
+  </div>
+
+  <div id="affectedList"></div>
+
+  <div class="action-row">
+    <button class="success" id="replaceBtn" onclick="app.doBulkReplace()">Replace All</button>
+    <button class="cancel" onclick="app.reset()">Cancel</button>
+    <span id="progressText"></span>
+  </div>
+
+  <div id="replaceLog" style="display:none">
+    <div class="section-title">Replacement Log</div>
+    <div id="logEntries"></div>
+  </div>
+</div>
+
+<div id="status"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
